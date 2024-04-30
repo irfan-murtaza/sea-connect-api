@@ -1,2 +1,2 @@
-# sea-connect
-sea-connect
+# sea-connect-api
+sea-connect-api
