@@ -8,23 +8,23 @@ const result = config();
 const jwtSecretKey = process.env.JWT_SECRET_KEY
 
 const register = async (req, res) => {
-  const { email, password} = req.body;
+  const { email, password, firstName, lastName} = req.body;
 
-  if (!email || !password) {
+  if (!email || !password || !firstName || !lastName) {
     return res.status(400).json({ message: "Email and password are required", success: false });
   }
 
   try {
-    const userExists = await User.exists(email);
+    const userExists = await User.exists(email.toLowerCase());
     if (userExists) {
       return res.status(409).json({ message: 'User already exists with this email', success: false });
     }
 
     const hashedPassword = await bcrypt.hash(password, parseInt(process.env.HASH_PASSWORD_SALT_ROUNDS) || 10);
 
-    await User.create(email, hashedPassword);
-    const token = jwt.sign({ email: email }, jwtSecretKey, { expiresIn: '24h' });
-    res.status(201).json({ message: "User registered successfully!", success: true, token: token });
+    const user = await User.create(email.toLowerCase(), hashedPassword, firstName, lastName);
+    const token = jwt.sign({ email: email.toLowerCase() }, jwtSecretKey, { expiresIn: '24h' });
+    res.status(201).json({ message: "User registered successfully!", success: true, token: token, user: user });
 
   } catch(error) {
     res.status(500).json({ message: "Error registering new user", success: false, error: error.message });
@@ -40,13 +40,13 @@ const login = async (req, res) => {
   }
 
   try {
-    const user = await User.exists(email);
+    const user = await User.exists(email.toLowerCase());
     if (!user) return res.status(404).json({ message: `User with email ${email} not found`, success: false });
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) return res.status(401).json({ message: "Invalid password", success: false });
 
-    const token = jwt.sign({ email: user.email }, jwtSecretKey, { expiresIn: '24h' });
+    const token = jwt.sign({ email: user.email.toLowerCase() }, jwtSecretKey, { expiresIn: '24h' });
 
     return res.status(200).json({ message: "Login successful", token: token, success: true})
   }
