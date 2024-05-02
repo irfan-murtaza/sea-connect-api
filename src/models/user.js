@@ -14,13 +14,15 @@ class User {
     return user;
   }
 
-  static async create(email, password) {
+  static async create(email, password, firstName, lastName) {
 
     try {
       const user = await prisma.user.create({
           data: {
               email: email,
-              password: password
+              password: password,
+              firstName: firstName,
+              lastName: lastName
           }
       });
       return new User(user);
