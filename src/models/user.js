@@ -14,7 +14,7 @@ class User {
     return user;
   }
 
-  static async create(email, password, firstName, lastName) {
+  static async create(email, password, firstName, lastName, role) {
 
     try {
       const user = await prisma.user.create({
@@ -22,7 +22,8 @@ class User {
               email: email,
               password: password,
               firstName: firstName,
-              lastName: lastName
+              lastName: lastName,
+              role: role
           }
       });
       return new User(user);
