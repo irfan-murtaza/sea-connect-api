@@ -18,12 +18,52 @@ enum Role {
   ADMIN
 }
 
+enum MembershipStatus {
+  ACTIVE
+  INACTIVE
+}
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  firstName String?
-  lastName  String?
-  email     String @unique
-  password  String
-  role      Role @default(USER)
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName              String?
+  lastName               String?
+  email                  String @unique
+  password               String
+  role                   Role @default(USER)
+  phone                  String? @unique
+  MembershipStatus       MembershipStatus @default(INACTIVE)
+  MembershipStartDate    DateTime?
+  address                String?
+}
+
+
+enum MembershipType {
+  MONTHLY
+  ANNUAL
+  LIFETIME
+}
+
+model MembershipHistory {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  UserID                String
+  UserEmail             String
+  StartDate             DateTime
+  EndDate               DateTime
+  MembershipType        MembershipType
+}
+
+
+enum ContributionType {
+  DONATION
+  MEMBERSHIP
+  EVENT
+  OTHER
+}
+model Contributions {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  UserID                String
+  UserEmail             String
+  Amount                Float
+  ContributionData      DateTime
+  ContributionType      ContributionType
 }

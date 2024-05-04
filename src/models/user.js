@@ -23,11 +23,56 @@ class User {
               password: password,
               firstName: firstName,
               lastName: lastName,
-              role: role
+              role: role.toUpperCase(),
+              MembershipStatus: 'INACTIVE'
           }
       });
       return new User(user);
 
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async update(user, data) { 
+    try {
+      const updatedUser = await prisma.user.update({
+        where: {
+          email: user.email
+        },
+        data: data
+      });
+
+      return updatedUser;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async phoneExists(phone) {
+    try {
+      const user = await prisma.user.findFirst({
+        where: {
+          phone: phone,
+        },
+      });
+
+      return user;
+    }
+
+    catch(error) {
+      throw error;
+    }
+  }
+
+  static async delete(user) {
+    try{
+      const deleteUser = await prisma.user.delete({
+        where: {
+          email: user.email,
+        },
+      });
+      return deleteUser;
     } catch (error) {
       throw error;
     }
