@@ -27,7 +27,7 @@ class User {
               MembershipStatus: 'INACTIVE'
           }
       });
-      return new User(user);
+      return user;
 
     } catch (error) {
       throw error;

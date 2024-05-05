@@ -14,7 +14,7 @@ const register = async (req, res) => {
   const { email, password, firstName, lastName} = req.body;
 
   if (!email || !password || !firstName || !lastName) {
-    return res.status(400).json({ message: "Email and password are required", success: false });
+    return res.status(400).json({ message: "Fields are missing", success: false });
   }
 
   try {
@@ -26,8 +26,9 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, parseInt(process.env.HASH_PASSWORD_SALT_ROUNDS) || 10);
 
     const user = await User.create(email.toLowerCase(), hashedPassword, firstName, lastName, role);
+    console.log("use after creation", user.email)
     const token = jwt.sign({ email: user.email.toLowerCase() }, jwtSecretKey, { expiresIn: '24h' });
-    res.status(201).json({ message: "User registered successfully!", success: true, token: token, user: user, role: user.role });
+    res.status(201).json({ message: "User registered successfully!", success: true, token: token, role: user.role });
 
   } catch(error) {
     res.status(500).json({ message: "Error registering new user", success: false, error: error.message });
