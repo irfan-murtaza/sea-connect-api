@@ -1,9 +1,10 @@
 import { Router } from "express";
 import isLoggedIn from "../middlewares/isLoggein.js";
 import isAdmin from "../middlewares/isAdmin.js";
-import { updateEmail, updateMember, updatePhone, addMember, deleteMember } from "../controllers/memberManagementController.js";
+import { getAllMembers, updateEmail, updateMember, updatePhone, addMember, deleteMember } from "../controllers/memberManagementController.js";
 
 const memberRoutes = Router();
+memberRoutes.get('/', isLoggedIn, isAdmin, getAllMembers)
 memberRoutes.post('/add', isLoggedIn, isAdmin, addMember)
 memberRoutes.put('/update', isLoggedIn, isAdmin, updateMember)
 memberRoutes.put('/update_email', isLoggedIn, isAdmin, updateEmail)
