@@ -1,6 +1,20 @@
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
 
+const getAllMembers = async (req, res) => {
+  try {
+    const users = await User.getAllUsers();
+    const usersWithoutPassword = users.map(item => {
+      const { password, ...rest } = item;
+      return rest;
+    });
+    res.status(200).json({ message: "Members retrieved successfully", success: true, data: usersWithoutPassword });
+  } catch (err) {
+    res.status(500).json({ message: "Error retrieving members", success: false, error: err.message });
+  }
+}
+
+
 const updateMember = async (req, res) => {
   const memberEmail = req.body.memberEmail;
   const updateFields = req.body.updateFields;
@@ -128,4 +142,4 @@ const deleteMember = async (req, res) => {
   }
 }
 
-export { addMember, updateMember, updateEmail, updatePhone, deleteMember };
+export { getAllMembers, addMember, updateMember, updateEmail, updatePhone, deleteMember };
