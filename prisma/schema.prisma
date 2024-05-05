@@ -56,14 +56,15 @@ model MembershipHistory {
 enum ContributionType {
   DONATION
   MEMBERSHIP
+  VOLUNTEER
   EVENT
   OTHER
 }
-model Contributions {
+model Contribution {
   id                    String   @id @default(auto()) @map("_id") @db.ObjectId
   UserID                String
   UserEmail             String
   Amount                Float
-  ContributionData      DateTime
+  ContributionDate      DateTime
   ContributionType      ContributionType
 }

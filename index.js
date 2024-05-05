@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./src/routes/authRoutes.js";
 import memberRoutes from "./src/routes/memberRoutes.js";
+import contributionRoutes from "./src/routes/contributionRoutes.js";
+import memberShipRoutes from "./src/routes/membershipRoutes.js";
 import { config } from 'dotenv';
 const result = config();
 
@@ -13,6 +15,8 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes)
 app.use('/api/member', memberRoutes)
+app.use('/api/contribution', contributionRoutes)
+app.use('/api/membership', memberShipRoutes)
 
 
 app.listen(PORT, () => {
