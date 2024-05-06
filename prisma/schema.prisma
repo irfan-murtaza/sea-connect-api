@@ -68,3 +68,29 @@ model Contribution {
   ContributionDate      DateTime
   ContributionType      ContributionType
 }
+
+model Events {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  title                 String
+  description           String?
+  eventDate             DateTime
+  location              String
+  organizerId           String
+  organizerEmail        String
+  registrationFee       Float
+}
+
+
+enum ResgisterationStatus {
+  CONFIRMED
+  CANCELLED
+  PENDING
+}
+model EventRegistrations {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  memberID              String
+  memberEmail           String
+  eventID               String
+  registrationDate      DateTime
+  status                ResgisterationStatus
+}
