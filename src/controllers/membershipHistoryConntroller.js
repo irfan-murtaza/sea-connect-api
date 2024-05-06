@@ -1,7 +1,7 @@
 import MemberShipHistory from '../models/membershipHistory.js';
 
 const getMemberShipHistory = async (req, res) => {
-  const userEmail = req.body.email;
+  const userEmail = req.query.email;
   if (!userEmail) return res.status(400).json({ message: "Member Email is required", success: false });
 
   try {
