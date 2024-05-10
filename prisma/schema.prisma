@@ -31,8 +31,8 @@ model User {
   password               String
   role                   Role @default(USER)
   phone                  String? @unique
-  MembershipStatus       MembershipStatus @default(INACTIVE)
-  MembershipStartDate    DateTime?
+  membershipStatus       MembershipStatus @default(INACTIVE)
+  membershipStartDate    DateTime?
   address                String?
 }
 
@@ -45,11 +45,11 @@ enum MembershipType {
 
 model MembershipHistory {
   id                    String   @id @default(auto()) @map("_id") @db.ObjectId
-  UserID                String
-  UserEmail             String
-  StartDate             DateTime
-  EndDate               DateTime
-  MembershipType        MembershipType
+  userID                String
+  userEmail             String
+  startDate             DateTime
+  endDate               DateTime
+  membershipType        MembershipType
 }
 
 
@@ -62,11 +62,11 @@ enum ContributionType {
 }
 model Contribution {
   id                    String   @id @default(auto()) @map("_id") @db.ObjectId
-  UserID                String
-  UserEmail             String
-  Amount                Float
-  ContributionDate      DateTime
-  ContributionType      ContributionType
+  userID                String
+  userEmail             String
+  amount                Float
+  contributionDate      DateTime
+  contributionType      ContributionType
 }
 
 model Events {
