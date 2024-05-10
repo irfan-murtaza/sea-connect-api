@@ -6,6 +6,17 @@ class Event {
 
   static async getActiveEvents() {
     try {
+      // const activeEvents = await prisma.events.create({
+      //   data: {
+      //     title: 'Musical Concert',
+      //     eventDate: this.addDays(new Date(), 4),
+      //     location: 'Event Hall',
+      //     organizerId: 'test',
+      //     organizerEmail: 'irfan_test4@gmail.com',
+      //     registrationFee: 98.0
+      //   }
+      // })
+
       const activeEvents = await prisma.events.findMany({
         where: {
           eventDate: {
