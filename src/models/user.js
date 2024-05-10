@@ -23,7 +23,7 @@ class User {
     return user;
   }
 
-  static async create(email, password, firstName, lastName, role) {
+  static async create(email, password, firstName, lastName) {
 
     try {
       const user = await prisma.user.create({
@@ -32,7 +32,7 @@ class User {
               password: password,
               firstName: firstName,
               lastName: lastName,
-              role: role.toUpperCase(),
+              role: 'USER',
               MembershipStatus: 'INACTIVE'
           }
       });
