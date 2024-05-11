@@ -30,6 +30,55 @@ class Event {
     }
   }
 
+  static async getAllEvents() {
+    try {
+      const allEvents = await prisma.events.findMany();
+      return allEvents;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async createEvent(data) {
+    try {
+      const event = await prisma.events.create({
+        data: data
+      });
+      return event;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updateEvent(eventId, data) {
+    try {
+      const updatedEvent = await prisma.events.update({
+        where: {
+          id: eventId
+        },
+        data: data
+      });
+
+      return updatedEvent;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteEvent(eventId) {
+    try {
+      const deletedEvent = await prisma.events.delete({
+        where: {
+          id: eventId
+        }
+      });
+
+      return deletedEvent;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static addDays(date, days) {
     const result = new Date(date);
     result.setDate(result.getDate() + days);

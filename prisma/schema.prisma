@@ -80,7 +80,6 @@ model Events {
   registrationFee       Float
 }
 
-
 enum ResgisterationStatus {
   CONFIRMED
   CANCELLED

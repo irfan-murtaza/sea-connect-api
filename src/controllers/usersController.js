@@ -25,7 +25,10 @@ const register = async (req, res) => {
     const user = await User.create(email.toLowerCase(), hashedPassword, firstName, lastName);
 
     const token = jwt.sign({ email: user.email.toLowerCase() }, jwtSecretKey, { expiresIn: '24h' });
-    res.status(201).json({ message: "User registered successfully!", success: true, token: token, role: user.role });
+
+    const { password: userPassword, ...userWithoutPassword } = user;
+
+    res.status(201).json({ message: "User registered successfully!", success: true, token: token, role: user.role, user: userWithoutPassword });
 
   } catch(error) {
     res.status(500).json({ message: "Error registering new user", success: false, error: error.message });
@@ -48,12 +51,19 @@ const login = async (req, res) => {
     if (!isPasswordValid) return res.status(401).json({ message: "Invalid password", success: false });
 
     const token = jwt.sign({ email: user.email.toLowerCase() }, jwtSecretKey, { expiresIn: '24h' });
+    const { password: userPassword, ...userWithoutPassword } = user;
 
-    return res.status(200).json({ message: "Login successful", token: token, success: true, role: user.role });
+    return res.status(200).json({ message: "Login successful", token: token, success: true, role: user.role, user: userWithoutPassword });
   }
   catch (error) {
     res.status(500).json({ message: error.message, success: false })
   }
 }
 
-export { register, login };
+const me = async (req, res) => {
+  const user = req.user;
+  const { password: userPassword, ...userWithoutPassword } = user;
+  res.status(200).json({ message: "User found", success: true, role: user.role, user: userWithoutPassword });
+}
+
+export { register, login, me };
