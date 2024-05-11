@@ -33,7 +33,7 @@ class User {
               firstName: firstName,
               lastName: lastName,
               role: 'USER',
-              MembershipStatus: 'INACTIVE'
+              membershipStatus: 'INACTIVE'
           }
       });
       return user;
