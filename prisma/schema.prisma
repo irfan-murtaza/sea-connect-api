@@ -43,8 +43,17 @@ enum MembershipType {
   LIFETIME
 }
 
+model MembershipPlans {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  membershipType        MembershipType
+  amount                Float
+  description           String?
+  status                MembershipStatus 
+}
+
 model MembershipHistory {
   id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  membershipPlanId      String
   userID                String
   userEmail             String
   startDate             DateTime
