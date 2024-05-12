@@ -1,15 +1,15 @@
 # Use the specific Node.js version from the Docker Hub
-FROM node:16.15.1
+FROM node:alpine
 
 # Set the working directory in the Docker container
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy the package.json and package-lock.json (if available)
-COPY package*.json ./
+COPY package*.json .
 
 # Install dependencies in the container
 # Install nodemon globally
-RUN npm install && npm install -g nodemon
+RUN npm ci
 
 # Install Prisma CLI globally
 RUN npm install -g prisma
@@ -18,10 +18,10 @@ RUN npm install -g prisma
 COPY . .
 
 # Generate the Prisma client
-RUN prisma generate
+# RUN prisma generate
 
 # Expose the port your app runs on
-EXPOSE 3002
+# EXPOSE 3002
 
 # Command to run your app using nodemon
-CMD ["nodemon", "index.js"]
+CMD ["npm", "start"]
