@@ -5,6 +5,7 @@ import memberRoutes from "./src/routes/memberRoutes.js";
 import contributionRoutes from "./src/routes/contributionRoutes.js";
 import memberShipRoutes from "./src/routes/membershipRoutes.js";
 import eventRoutes from "./src/routes/eventRoutes.js";
+import membershipPlanRoutes from "./src/routes/membershipPlanRoutes.js";
 import { config } from 'dotenv';
 const result = config();
 
@@ -19,6 +20,7 @@ app.use('/api/member', memberRoutes)
 app.use('/api/contribution', contributionRoutes)
 app.use('/api/membership', memberShipRoutes)
 app.use('/api/event', eventRoutes)
+app.use('/api/plans', membershipPlanRoutes)
 
 
 app.listen(PORT, () => {
