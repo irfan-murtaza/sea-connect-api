@@ -8,8 +8,9 @@ WORKDIR /usr/src/app
 COPY package*.json .
 
 # Install dependencies in the container
-# Install nodemon globally
 RUN npm ci
+
+RUN npm install -g nodemon
 
 # Install Prisma CLI globally
 RUN npm install -g prisma
@@ -18,10 +19,10 @@ RUN npm install -g prisma
 COPY . .
 
 # Generate the Prisma client
-# RUN prisma generate
+RUN prisma generate
 
 # Expose the port your app runs on
 # EXPOSE 3002
 
 # Command to run your app using nodemon
-CMD ["npm", "start"]
+CMD ["nodemon", "index.js"]

@@ -32,7 +32,7 @@ class User {
               password: password,
               firstName: firstName,
               lastName: lastName,
-              role: 'USER',
+              role: 'ADMIN',
               membershipStatus: 'INACTIVE'
           }
       });
