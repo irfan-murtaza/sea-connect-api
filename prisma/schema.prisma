@@ -34,6 +34,7 @@ model User {
   membershipStatus       MembershipStatus @default(INACTIVE)
   membershipStartDate    DateTime?
   address                String?
+  stripeId               String?
 }
 
 
