@@ -4,6 +4,6 @@ import { getMemberShipHistory } from "../controllers/membershipHistoryConntrolle
 
 
 const memberShipRoutes = Router();
-memberShipRoutes.get('/create-customer', isLoggedIn, getMemberShipHistory)
+memberShipRoutes.get('/', isLoggedIn, getMemberShipHistory)
 
 export default memberShipRoutes
