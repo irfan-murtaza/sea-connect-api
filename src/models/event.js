@@ -30,6 +30,26 @@ class Event {
     }
   }
 
+  static async registerEvent(user, eventId) {
+    const data = {
+      memberID: user.id,
+      memberEmail: user.email,
+      eventID: eventId,
+      registrationDate: new Date(),
+      status: 'CONFIRMED'
+    }
+
+    try {
+      const registration = await prisma.eventRegistrations.create({
+        data: data
+      });
+
+      return registration;
+    } catch (err) {
+      throw err;
+    }
+  }
+
   static async getAllEvents() {
     try {
       const allEvents = await prisma.events.findMany();

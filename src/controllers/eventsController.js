@@ -73,5 +73,20 @@ const deleteEvent = async (req, res) => {
   }
 }
 
+const registerEvent = async(req, res) => {
+  const currentUser = req.user;
 
-export { getAllEvents, getActiveEvents, createEvent, updateEvent, deleteEvent};
+  if (!req.body.eventId) {
+    return res.status(400).json({ message: "Event ID is required", success: false });
+  }
+
+  try {
+    const event = await Event.registerEvent(currentUser, req.body.eventId);
+    res.status(200).json({ message: "Event registered successfully", success: true, data: event });
+  } catch (err) {
+    res.status(500).json({ message: "Error registering Event", success: false, error: err.message });
+  }
+}
+
+
+export { getAllEvents, getActiveEvents, createEvent, updateEvent, deleteEvent, registerEvent};
