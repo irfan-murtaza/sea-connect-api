@@ -92,9 +92,6 @@ const confirmAndMakePayment =  async (req, res) => {
   try {
     const { paymentId, customerId, paymentMethodId } = req.body;
 
-    paymentType = contribution, membershipShip , eventFees 
-
-
     const paymentSuccess = await stripe.paymentIntents.confirm(
       paymentId, {
       // payment_method: paymentMethods.data[ 0 ].id,

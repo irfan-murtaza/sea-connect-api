@@ -22,7 +22,7 @@ const getUserContributions = async (req, res) => {
 }
 
 const getMyContributions = async (req, res) => {
-  const userEmail = req.user.userEmail
+  const userEmail = req.user.email
 
   try {
     const contributions = await Contribution.getUserContributions(userEmail);
