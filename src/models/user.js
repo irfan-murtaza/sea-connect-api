@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import Stripe from 'stripe';
+const stripe = Stripe(process.env.STRIPE_TEST_KEY);
 
 const prisma = new PrismaClient();
 
@@ -26,6 +28,10 @@ class User {
   static async create(email, password, firstName, lastName) {
 
     try {
+      const customer = await stripe.customers.create({
+        name: `${firstName} ${lastName}` , email
+      });
+
       const user = await prisma.user.create({
           data: {
               email: email,
@@ -33,7 +39,8 @@ class User {
               firstName: firstName,
               lastName: lastName,
               role: 'USER',
-              membershipStatus: 'INACTIVE'
+              membershipStatus: 'INACTIVE',
+              stripeId: customer.id
           }
       });
       return user;

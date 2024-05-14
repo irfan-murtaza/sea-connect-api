@@ -18,11 +18,15 @@ services:
     environment:
       SERVER_PORT: "3002"
       DATABASE_URL: "mongodb://mongo_db:27017/sea-connect"
+    volumes:
+      - .:/usr/src/app
+      - node_modules_volume:/usr/src/app/node_modules
     depends_on:
       - mongo_db
 
 volumes:
   mongo_db: {}
+  node_modules_volume:
 
     
 
