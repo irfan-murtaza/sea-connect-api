@@ -7,6 +7,7 @@ import memberShipRoutes from "./src/routes/membershipRoutes.js";
 import eventRoutes from "./src/routes/eventRoutes.js";
 import membershipPlanRoutes from "./src/routes/membershipPlanRoutes.js";
 import stripeRoutes from "./src/routes/stripeRoutes.js";
+import voteRoutes from "./src/routes/voteRoutes.js";
 import { config } from 'dotenv';
 const result = config();
 
@@ -23,6 +24,7 @@ app.use('/api/membership', memberShipRoutes)
 app.use('/api/event', eventRoutes)
 app.use('/api/plans', membershipPlanRoutes)
 app.use('/api/stripe', stripeRoutes)
+app.use('/api/vote', voteRoutes)
 
 
 app.listen(PORT, () => {

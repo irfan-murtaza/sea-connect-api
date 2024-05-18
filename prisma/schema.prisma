@@ -103,3 +103,34 @@ model EventRegistrations {
   registrationDate      DateTime
   status                ResgisterationStatus
 }
+
+enum voteType {
+  SINGLE_ROUND
+  TWO_ROUNDS
+}
+
+enum resultType {
+  ABSOLUTE
+  RELATIVE
+}
+model Votes {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  title                 String
+  description           String?
+  totalRounds           Int?
+  resultType            resultType
+}
+
+enum roundNumber {
+  FIRST
+  SECOND
+}
+
+model VoteRounds {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  voteId                String
+  roundNumber           roundNumber
+  startDate             DateTime
+  endDate               DateTime
+  voteOptions           String[]
+}

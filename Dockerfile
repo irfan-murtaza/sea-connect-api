@@ -19,7 +19,7 @@ RUN npm install -g prisma
 COPY . .
 
 # Generate the Prisma client
-RUN prisma generate
+RUN prisma generate && echo "Prisma client generated successfully"
 
 # Expose the port your app runs on
 # EXPOSE 3002
