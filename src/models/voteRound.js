@@ -3,6 +3,23 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 class VoteRound {
+
+  static async getRound(roundId) {
+    try {
+      const round = await prisma.voteRounds.findFirst({
+        where: {
+          id: roundId
+        }
+      });
+
+      if (!round) throw new Error("Round not found with Round ID")
+
+      return round
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async createRound(data) {
     try {
       const vote = await prisma.votes.findFirst({
@@ -48,6 +65,37 @@ class VoteRound {
       });
 
       return rounds;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getCompletedVotes() {
+    try {
+      const rounds = await prisma.voteRounds.findMany({
+        where: {
+          endDate: {
+            lte: new Date()
+          }
+        }
+      });
+
+      return rounds;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updateRound(roundId, data) {
+    try {
+      const round = await prisma.voteRounds.update({
+        where: {
+          id: roundId
+        },
+        data: data
+      });
+
+      return round;
     } catch (error) {
       throw error;
     }

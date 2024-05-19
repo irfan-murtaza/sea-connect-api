@@ -24,12 +24,20 @@ const createVote = async (req, res) => {
 
 const getActiveVotes = async (req, res) => {
   try {
-    const votes = await VoteService.getActiveVotes();
+    const votes = await VoteService.getVotes();
     res.status(200).json({ message: "Votes retrieved successfully", success: true, data: votes });
   } catch (err) {
     res.status(500).json({ message: "Error retrieving Votes", success: false, error: err.message });
   }
 }
 
+const getCompletedRounds = async (req, res) => {
+  try {
+    const rounds = await VoteService.getVotes(true);
+    res.status(200).json({ message: "Rounds retrieved successfully", success: true, data: rounds });
+  } catch (err) {
+    res.status(500).json({ message: "Error retrieving Rounds", success: false, error: err.message });
+  }
+}
 
-export { createVote, getActiveVotes };
+export { createVote, getActiveVotes, getCompletedRounds };
