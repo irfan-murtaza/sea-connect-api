@@ -134,3 +134,13 @@ model VoteRounds {
   endDate               DateTime
   voteOptions           String[]
 }
+
+
+model VoteCast {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  voteId                String
+  roundId               String
+  voterId               String
+  voterEmail            String
+  voteOption            String
+}
