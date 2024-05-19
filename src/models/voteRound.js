@@ -10,9 +10,6 @@ class VoteRound {
           id: data.voteId
         }
       });
-
-      console.log("vote: ", vote);
-
       const totalRounds = vote.totalRounds
 
       const rounds = await prisma.voteRounds.findMany({
@@ -25,7 +22,6 @@ class VoteRound {
         throw new Error('Already enough rounds')
       }
 
-      console.log('Total Roounds', totalRounds )
       data.roundNumber = rounds.length == 0 ? 'FIRST' : 'SECOND'
 
       const voteRound = await prisma.voteRounds.create({
@@ -33,6 +29,25 @@ class VoteRound {
       });
 
       return voteRound;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getActiveRounds() {
+    try {
+      const rounds = await prisma.voteRounds.findMany({
+        where: {
+          startDate: {
+            lte: new Date()
+          },
+          endDate: {
+            gte: new Date()
+          }
+        }
+      });
+
+      return rounds;
     } catch (error) {
       throw error;
     }

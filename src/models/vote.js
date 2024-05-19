@@ -5,8 +5,6 @@ const prisma = new PrismaClient();
 class Vote {
   static async createVote(data) {
     try {
-
-      console.log("-------------------------------Rounds",data.totalRounds)
       if (data.totalRounds > 2) {
         throw new Error("Total Round Must be smaller then 2")
       }
@@ -14,6 +12,20 @@ class Vote {
       const vote = await prisma.votes.create({
         data: data
       })
+
+      return vote;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getVote(voteId) {
+    try {
+      const vote = await prisma.votes.findFirst({
+        where: {
+          id: voteId
+        }
+      });
 
       return vote;
     } catch (error) {
