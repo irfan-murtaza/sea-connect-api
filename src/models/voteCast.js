@@ -13,8 +13,6 @@ class VoteCast {
     return vote;
   }
 
-
-
   static async castVote(data) {
     try {
       const voteCast = await prisma.voteCast.create({
@@ -25,7 +23,19 @@ class VoteCast {
     }catch (e) {
       throw e;
     }
+  }
 
+  static async getCastedVotes(roundId) {
+    try {
+      const votes = await prisma.voteCast.findMany({
+        where: {
+          roundId: roundId
+        }
+      });
+      return votes;
+    } catch (error) {
+      throw error;
+    }
   }
   
 }

@@ -32,6 +32,8 @@ class Vote {
       throw error;
     }
   }
+
+  
 }
 
 export default Vote
