@@ -1,4 +1,5 @@
 import Vote from "../models/vote.js";
+import VoteService from "../services/voteService.js";
 
 const createVote = async (req, res) => {
   const body = req.body;
@@ -21,7 +22,14 @@ const createVote = async (req, res) => {
   }
 }
 
+const getActiveVotes = async (req, res) => {
+  try {
+    const votes = await VoteService.getActiveVotes();
+    res.status(200).json({ message: "Votes retrieved successfully", success: true, data: votes });
+  } catch (err) {
+    res.status(500).json({ message: "Error retrieving Votes", success: false, error: err.message });
+  }
+}
 
 
-
-export { createVote };
+export { createVote, getActiveVotes };
