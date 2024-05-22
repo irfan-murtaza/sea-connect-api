@@ -144,3 +144,20 @@ model VoteCast {
   voterEmail            String
   voteOption            String
 }
+
+enum assemblyType {
+  GENERAL
+  EXTRAORDINARY
+}
+
+model GeneralAssembly {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  title                 String
+  description           String?
+  date                  DateTime
+  type                  String
+  quorumRequired        Int
+  votes                 Json?
+  status                String
+  minutes               String
+}

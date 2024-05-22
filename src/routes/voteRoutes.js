@@ -13,7 +13,4 @@ voteRoutes.get('/get-round-result/:roundId', isLoggedIn, getRoundResult)
 voteRoutes.put('/update-round/:roundId', isLoggedIn, isAdmin, updateRound)
 voteRoutes.get('/get-compeleted-votes', isLoggedIn, getCompletedRounds)
 
-
-
-
 export default voteRoutes
