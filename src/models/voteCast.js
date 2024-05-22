@@ -3,10 +3,11 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 class VoteCast {
-  static async exists(email) {
+  static async exists(email, roundId) {
     const vote = await prisma.voteCast.findFirst({
       where: {
         voterEmail: email,
+        roundId: roundId
       },
     });
 

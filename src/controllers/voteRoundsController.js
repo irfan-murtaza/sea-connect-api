@@ -25,9 +25,9 @@ const createVoteRound = async (req, res) => {
 
 const castVote = async (req, res) => {
   const body = req.body;
-  const vote = await VoteCast.exists(req.user.email)
-  if (vote) return res.status(400).json({ message: "You have already casted your vote", success: false });
   if (!body.voteId || !body.roundId || !body.voteOption) return res.status(400).json({ message: "fields are missing", success: false });
+  const vote = await VoteCast.exists(req.user.email, body.roundId)
+  if (vote) return res.status(400).json({ message: "You have already casted your vote", success: false });
 
   const data = {
     voteId: body.voteId,
