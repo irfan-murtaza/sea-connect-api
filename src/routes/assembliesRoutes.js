@@ -1,11 +1,14 @@
 import { Router } from "express";
 import isLoggedIn from "../middlewares/isLoggein.js";
 import isAdmin from "../middlewares/isAdmin.js";
-import { createAssembly, getAllAssemblies } from "../controllers/assembliesController.js";
+import { createAssembly, getAllAssemblies, updateAssembly, recordVote } from "../controllers/assembliesController.js";
 
 const assembliesRoutes = Router();
 assembliesRoutes.post('/create', isLoggedIn, isAdmin, createAssembly)
 assembliesRoutes.get('/get', isLoggedIn, getAllAssemblies)
+assembliesRoutes.put('/update/:id', isLoggedIn, isAdmin, updateAssembly)
+assembliesRoutes.post('/:id/vote', isLoggedIn, recordVote)
+
 
 
 export default assembliesRoutes

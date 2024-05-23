@@ -26,7 +26,8 @@ class Assembly {
       else {
         const assemblies = await prisma.generalAssembly.findMany({
           date: {
-            gte: new Date()
+            gte: new Date(),
+            status: 'ONGOING'
           }
         });
 
@@ -35,7 +36,56 @@ class Assembly {
     } catch (error) {
       throw error
     }
-  }  
+  }
+
+  static async updateAssembly(assemblyId, data) {
+    try {
+      const assembly = await prisma.generalAssembly.update({
+        where: {
+          id: assemblyId
+        },
+        data: data
+      });
+      return assembly;
+
+    } catch (error) {
+      throw error
+    }
+  }
+
+  static async recordVote(assemblyId, userEmail, voteType) {
+    try {
+
+      const assembly = await prisma.generalAssembly.findUnique({
+        where: {
+          id: assemblyId
+        }
+      });
+
+      const emailExists = assembly.votes.some(vote => vote.userEmail === userEmail);
+
+      if (emailExists) throw new Error('User has already voted');
+
+      const updatedAssembly = await prisma.generalAssembly.update({
+        where: {
+          id: assemblyId
+        },
+        data: {
+          votes: {
+            push: {
+              userEmail: userEmail,
+              voteType: voteType.toUpperCase(),
+            },
+          },
+        },
+      });
+
+      return updatedAssembly;
+    } catch (error) {
+      throw error
+    }
+  }
+  
 }
 
 export default Assembly

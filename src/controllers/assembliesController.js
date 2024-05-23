@@ -15,7 +15,7 @@ const createAssembly =  async (req, res) => {
       date,
       type: type.toUpperCase(),
       quorumRequired,
-      status: 'planned',
+      status: 'PLANNED',
       minutes: ''
     });
 
@@ -34,9 +34,45 @@ const getAllAssemblies =  async (req, res) => {
     const assemblies = await Assembly.getAllAssemblies(user)
     res.status(200).json({ message: "Assemblies retrieved successfully", success: true, data: assemblies });
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving Assemblies", success: false, error: err.message });
+    res.status(500).json({ message: "Error retrieving Assemblies", success: false, error: error.message });
+  }
+}
+
+const updateAssembly = async (req, res) => {
+  const assemblyId= req.params.id;
+
+  const data = {};
+
+  if (req.body.title) data.title = req.body.title;
+  if (req.body.description) data.description = req.body.description;
+  if (req.body.date) data.date = req.body.date;
+  if (req.body.type) data.type = req.body.type.toUpperCase();
+  if (req.body.quorumRequired) data.quorumRequired = req.body.quorumRequired;
+  if (req.body.status) data.status = req.body.status.toUpperCase();
+  if (req.body.minutes) data.minutes = req.body.minutes;
+
+  try {
+    const assembly = await Assembly.updateAssembly(assemblyId, data);
+    res.status(200).json({ message: "Assembly updated successfully", success: true, data: assembly });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating Assembly", success: false, error: error.message });
+  }
+}
+
+const recordVote = async (req, res) => {
+  const assemblyId= req.params.id;
+  const userEmail = req.user.email
+  const { voteType } = req.body;
+
+  if (!voteType) return res.status(400).json({ message: "Vote Type is required", success: false });
+
+  try {
+    const assembly = await Assembly.recordVote(assemblyId, userEmail, voteType);
+    res.status(200).json({ message: "Vote Casted Successfully", success: true, data: assembly });
+  } catch (error) {
+    res.status(500).json({ message: "Error casting vote", success: false, error: error.message });
   }
 }
 
 
-export { createAssembly, getAllAssemblies };
+export { createAssembly, getAllAssemblies, updateAssembly, recordVote };

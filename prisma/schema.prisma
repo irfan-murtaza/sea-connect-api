@@ -150,14 +150,26 @@ enum assemblyType {
   EXTRAORDINARY
 }
 
+enum assemblyStatus {
+  planned
+  PLANNED
+  ONGOING
+  COMPLETED
+}
+
+type Vote {
+  userEmail String
+  voteType  String
+}
+
 model GeneralAssembly {
   id                    String   @id @default(auto()) @map("_id") @db.ObjectId
   title                 String
   description           String?
   date                  DateTime
-  type                  String
+  type                  assemblyType
   quorumRequired        Int
-  votes                 Json?
-  status                String
+  votes                 Vote[]
+  status                assemblyStatus
   minutes               String
 }
