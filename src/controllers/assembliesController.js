@@ -74,5 +74,17 @@ const recordVote = async (req, res) => {
   }
 }
 
+const voteResult = async (req, res) => {
+  const assemblyId= req.params.id;
 
-export { createAssembly, getAllAssemblies, updateAssembly, recordVote };
+  try {
+    const result = await Assembly.voteResult(assemblyId);
+    res.status(200).json({ message: "Vote Result", success: true, data: result });
+  } catch (error) {
+    res.status(500).json({ message: "Error getting vote result", success: false, error: error.message });
+  }
+
+}
+
+
+export { createAssembly, getAllAssemblies, updateAssembly, recordVote, voteResult };

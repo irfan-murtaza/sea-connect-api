@@ -85,7 +85,25 @@ class Assembly {
       throw error
     }
   }
-  
+
+  static async voteResult(assemblyId) {
+    try {
+      const assembly = await prisma.generalAssembly.findUnique({
+        where: {
+          id: assemblyId
+        }
+      });
+
+      const votes = assembly.votes;
+
+      const abstainVotes = votes.filter(vote => vote.voteType === 'ABSTAIN').length;
+      const againstVotes = votes.filter(vote => vote.voteType === 'AGAINST').length;
+
+      return { abstainVotes, againstVotes };
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default Assembly
