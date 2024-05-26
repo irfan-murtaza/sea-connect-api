@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json .
 
 # Install dependencies in the container
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 RUN npm install -g nodemon
 

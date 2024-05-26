@@ -173,3 +173,12 @@ model GeneralAssembly {
   status                assemblyStatus
   minutes               String
 }
+
+model Documents {
+  id                    String @id @default(auto()) @map("_id") @db.ObjectId
+  title                 String @unique
+  description           String?
+  documentUrl           String
+  owner                 Role
+  fileId                String
+}
