@@ -29,6 +29,19 @@ class Document {
       throw error;
     }
   }
+
+  static async getAllDocuments(user) {
+    try {
+      const documents = await prisma.documents.findMany({
+        where: {
+          owner: user.role
+        }
+      });
+      return documents;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default Document

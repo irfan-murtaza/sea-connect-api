@@ -48,4 +48,13 @@ const getDocument = async (req, res) => {
   }
 };
 
-export { getDocument };
+const getAllDocuments = async (req, res) => {
+  try {
+    const documents = await Document.getAllDocuments(req.user);
+    res.status(200).json({ message: "Documents retrieved successfully", data: documents });
+  } catch (err) {
+    res.status(500).json({ message: "Error retrieving documents", error: err.message });
+  }
+}
+
+export { getDocument, getAllDocuments };
