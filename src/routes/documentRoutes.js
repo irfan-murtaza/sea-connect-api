@@ -5,6 +5,6 @@ import { getDocument } from "../controllers/documentDownloadController.js";
 
 const documentRoutes = Router();
 documentRoutes.get('/:title', isLoggedIn, getDocument);
-documentRoutes.post('/upload', isLoggedIn, uploadDocument);
+documentRoutes.post('/upload/:title', isLoggedIn, uploadDocument);
 
 export default documentRoutes
