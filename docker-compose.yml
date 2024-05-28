@@ -1,32 +1,19 @@
-version: '3.9'
-
+version: '3.8'
 services:
-  mongo_db:
-    container_name: db_container
+  mongo:
     image: mongo:latest
     command: --replSet rs0
-    restart: always
     ports:
-      - 2717:27017
+      - "27017:27017"
     volumes:
-      - mongo_db:/data/db
-  
-  api:
+      - mongo-data:/data/db
+  app:
     build: .
     ports:
-      - 3002:3002
+      - "3002:3002"
     environment:
-      SERVER_PORT: "3002"
-      DATABASE_URL: "mongodb://mongo_db:27017/sea-connect"
-    # volumes:
-    #   - .:/usr/src/app
-    # #   - node_modules_volume:/usr/src/app/node_modules
+      - DATABASE_URL=mongodb://mongo:27017/sea-connect
     depends_on:
-      - mongo_db
-
+      - mongo
 volumes:
-  mongo_db: {}
-  node_modules_volume:
-
-    
-
+  mongo-data:
