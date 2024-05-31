@@ -182,3 +182,25 @@ model Documents {
   owner                 Role
   fileId                String
 }
+
+
+enum notiificationType {
+  EVENT
+  ACTION
+  OTHER
+}
+model Notifications {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                String
+  userEmail             String
+  title                 String
+  description           String?
+  notiificationType     String
+}
+
+model UserNotifications {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                String
+  userEmail             String
+  notificationId        String
+}
