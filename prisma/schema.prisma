@@ -204,3 +204,19 @@ model UserNotifications {
   userEmail             String
   notificationId        String
 }
+
+model Discussions {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  title                 String
+  description           String?
+  date                  DateTime
+}
+
+model Comments {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  discussionId          String
+  userId                String
+  userEmail             String
+  comment               String
+  date                  DateTime
+}

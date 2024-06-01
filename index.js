@@ -11,6 +11,8 @@ import voteRoutes from "./src/routes/voteRoutes.js";
 import assembliesRoutes from "./src/routes/assembliesRoutes.js";
 import documentRoutes from "./src/routes/documentRoutes.js";
 import notificationRoutes from "./src/routes/notificationRoutes.js";
+import discussionRoutes from "./src/routes/discussionsRoutes.js";
+
 import { config } from 'dotenv';
 const result = config();
 
@@ -31,6 +33,7 @@ app.use('/api/vote', voteRoutes)
 app.use('/api/assemblies',assembliesRoutes)
 app.use('/api/document', documentRoutes)
 app.use('/api/notification', notificationRoutes)
+app.use('/api/discussion', discussionRoutes)
 
 
 app.listen(PORT, () => {
