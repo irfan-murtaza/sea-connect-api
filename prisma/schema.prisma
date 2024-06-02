@@ -174,6 +174,14 @@ model GeneralAssembly {
   minutes               String
 }
 
+
+enum docType {
+  LEGAL
+  TECH
+  BUSINESS
+  ACADEMIC
+  OTHER
+}
 model Documents {
   id                    String @id @default(auto()) @map("_id") @db.ObjectId
   title                 String @unique
@@ -181,6 +189,7 @@ model Documents {
   documentUrl           String
   owner                 Role
   fileId                String
+  category              String?
 }
 
 

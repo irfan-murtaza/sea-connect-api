@@ -34,8 +34,8 @@ const uploadDocument = async (req, res) => {
       }
 
       var { title } = req.params;
-      var { description, owner } = req.body;
-      if (!title || !owner) {
+      var { description, owner, category } = req.body;
+      if (!title || !owner || !category) {
         return res.status(400).json({ message: "Missing required metadata", success: false });
       }
 
@@ -54,6 +54,7 @@ const uploadDocument = async (req, res) => {
         title,
         description,
         owner: owner.toUpperCase(),
+        category: category.toUpperCase(),
         documentUrl: req.file.filename,
         fileId: req.file.id
       };
