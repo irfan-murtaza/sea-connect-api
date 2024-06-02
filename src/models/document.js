@@ -32,12 +32,42 @@ class Document {
 
   static async getAllDocuments(user) {
     try {
-      const documents = await prisma.documents.findMany({
+      if (user.role.toLowerCase() === 'user') {
+        const documents = await prisma.documents.findMany({
+          where: {
+            owner: 'USER'
+          }
+        });
+
+        return documents;
+      }
+
+      const documents = await prisma.documents.findMany();
+      return documents;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteDocument(title) {
+    try {
+      const document = await prisma.documents.findUnique({
         where: {
-          owner: user.role
+          title: title
         }
       });
-      return documents;
+
+      if (!document) {
+        throw new Error("Document not found");
+      }
+
+      await prisma.documents.delete({
+        where: {
+          title: title
+        }
+      });
+
+      return document;
     } catch (error) {
       throw error;
     }

@@ -57,4 +57,17 @@ const getAllDocuments = async (req, res) => {
   }
 }
 
-export { getDocument, getAllDocuments };
+const deleteDocument = async (req, res) => {
+  const title = req.params.title;
+
+  if (!title) return res.status(400).json({ message: "Title is required", success: false });
+
+  try {
+    const comment = await Document.deleteDocument(title);
+    res.status(200).json({ message: "Comment deleted successfully", success: true, data: comment });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting comment", success: false, error: err.message });
+  }
+}
+
+export { getDocument, getAllDocuments, deleteDocument };

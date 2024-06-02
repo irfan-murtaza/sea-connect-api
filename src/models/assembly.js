@@ -25,8 +25,10 @@ class Assembly {
       }
       else {
         const assemblies = await prisma.generalAssembly.findMany({
-          date: {
-            gte: new Date(),
+          where: {
+            date: {
+              gte: new Date()
+            },
             status: 'ONGOING'
           }
         });
